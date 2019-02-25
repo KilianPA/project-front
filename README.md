@@ -13,7 +13,7 @@ Tindify est une application communautaire basé sur la musique
 
 ## Mardi 23 avril ( à distance )
 
-—> Gestion des utilisateurs
+—> Gestion des utilisateurs (chat, profil etc..)
 
 Test unitiaires
 
