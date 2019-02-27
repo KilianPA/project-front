@@ -14,7 +14,7 @@ const routes = [
       },
       {
         name: 'users.edit',
-        path: 'users/edit',
+        path: 'users/update',
         component: () => import('components/User/UserEdit.vue')
       },
       {

@@ -14,12 +14,12 @@ const routes = [
       },
       {
         name: 'users.edit',
-        path: 'users/edit',
+        path: 'users',
         component: () => import('components/User/UserEdit.vue')
       },
       {
         name: 'users.create',
-        path: 'users/create',
+        path: 'users',
         component: () => import('components/User/UserCreate.vue')
       }
     ]

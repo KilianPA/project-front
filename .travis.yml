@@ -17,3 +17,7 @@ script:
   - yarn test
 
 deploy:
+
+
+notifications:
+  email: false
