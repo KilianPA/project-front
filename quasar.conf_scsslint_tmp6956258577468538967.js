@@ -3,6 +3,13 @@
 module.exports = function (ctx) {
 	return {
 		// app plugins (/src/plugins)
+		env: ctx.dev
+			? { // so on dev we'll have
+				API: JSON.stringify('localhost' + process.env.MY_API)
+			}
+			: { // and on build (production):
+				API: JSON.stringify('https://prod.' + process.env.MY_API)
+			},
 		plugins: [
 			'axios'
 		],
@@ -18,13 +25,6 @@ module.exports = function (ctx) {
 		],
 		supportIE: false,
 		build: {
-			env: ctx.dev
-				? { // so on dev we'll have
-					API: JSON.stringify('https://project-back.herokuapp.com/api/')
-				}
-				: { // and on build (production):
-					API: JSON.stringify('https://prod.' + process.env.MY_API)
-				},
 			scopeHoisting: true,
 			// vueRouterMode: 'history',
 			// vueCompiler: true,
