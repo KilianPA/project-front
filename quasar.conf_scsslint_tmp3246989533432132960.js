@@ -20,7 +20,7 @@ module.exports = function (ctx) {
 		build: {
 			env: ctx.dev
 				? { // so on dev we'll have
-					API: JSON.stringify('localhost/api')
+					API: JSON.stringify('https://project-back.herokuapp.com/api/')
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/')
