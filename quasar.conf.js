@@ -11,16 +11,18 @@ module.exports = function (ctx) {
 		],
 		extras: [
 			ctx.theme.mat ? 'roboto-font' : null,
-			'material-icons' // optional, you are not bound to it
-			// 'ionicons',
+			'material-icons', // optional, you are not bound to it
+			'ionicons',
 			// 'mdi',
-			// 'fontawesome'
+			'fontawesome'
 		],
 		supportIE: false,
 		build: {
 			env: ctx.dev
 				? { // so on dev we'll have
-					API: JSON.stringify('localhost/api')
+					API: JSON.stringify('http://localhost:8000/api/'),
+					SPOTIFY_TOKEN: JSON.stringify('BQCCIbG87qs2q5hGb2RA6WQsl5YAYlQny4DHbDfPPSYOl4v_y0XfXZqcXDGpquafc8hQYwoBqLRkmL2kripSnnazO_Xiit1wE90pFSE8_GNi7gRCLTq7_4cax-oBSkG4GlywpAofre8gfSMeeEoE3UdlbAK_IFYxTSXkzA'),
+					SPOTIFY_URL: JSON.stringify('https://api.spotify.com/v1/search')
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/')
@@ -64,7 +66,14 @@ module.exports = function (ctx) {
 				'QItemSide',
 				'QCard',
 				'QCardMain',
-				'QCardTitle'
+				'QCardTitle',
+				'QInput',
+				'QField',
+				'QDatetime',
+				'QAutocomplete',
+				'QSelect',
+        'QItemSeparator',
+        'QItemTile'
 			],
 			directives: [
 				'Ripple'
@@ -77,7 +86,7 @@ module.exports = function (ctx) {
 			// i18n: 'de' // Quasar language
 		},
 		// animations: 'all' --- includes all animations
-		animations: [],
+		animations: ['slideInLeft', 'slideOutRight'],
 		ssr: {
 			pwa: false
 		},

@@ -5,12 +5,7 @@ const routes = [
     component: () => import('layouts/MyLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Index.vue')
-      },
-      {
-        name: 'users',
-        path: 'users',
-        component: () => import('components/User.vue')
+        path: '', component: () => import('components/Home.vue')
       },
       {
         name: 'users.edit',
