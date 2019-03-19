@@ -1,5 +1,5 @@
 // Configuration for your app
-
+const envparser = require('./src/envparser')
 module.exports = function (ctx) {
 	return {
 		// app plugins (/src/plugins)
@@ -18,12 +18,7 @@ module.exports = function (ctx) {
 		],
 		supportIE: false,
 		build: {
-			env: ctx.dev
-				? { // so on dev we'll have
-				}
-				: { // and on build (production):
-					API: JSON.stringify('https://project-back.herokuapp.com/api/')
-				},
+			env: envparser(),
 			scopeHoisting: true,
 			// vueRouterMode: 'history',
 			// vueCompiler: true,
