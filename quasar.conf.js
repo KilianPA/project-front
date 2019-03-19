@@ -23,7 +23,7 @@ module.exports = function (ctx) {
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/'),
-					TEST: process.env.SPOTIFY_TOKEN
+					TEST: JSON.stringify(process.env.SPOTIFY_TOKEN)
 				},
 			scopeHoisting: true,
 			// vueRouterMode: 'history',
