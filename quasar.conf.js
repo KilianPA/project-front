@@ -4,7 +4,7 @@ module.exports = function (ctx) {
 	return {
 		// app plugins (/src/plugins)
 		plugins: [
-			'axios'
+			'axios', 'vuelidate'
 		],
 		css: [
 			'app.styl'
@@ -20,9 +20,6 @@ module.exports = function (ctx) {
 		build: {
 			env: ctx.dev
 				? { // so on dev we'll have
-					API: JSON.stringify('http://localhost:8000/api/'),
-					SPOTIFY_TOKEN: JSON.stringify('BQCCIbG87qs2q5hGb2RA6WQsl5YAYlQny4DHbDfPPSYOl4v_y0XfXZqcXDGpquafc8hQYwoBqLRkmL2kripSnnazO_Xiit1wE90pFSE8_GNi7gRCLTq7_4cax-oBSkG4GlywpAofre8gfSMeeEoE3UdlbAK_IFYxTSXkzA'),
-					SPOTIFY_URL: JSON.stringify('https://api.spotify.com/v1/search')
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/')
@@ -73,17 +70,22 @@ module.exports = function (ctx) {
 				'QAutocomplete',
 				'QSelect',
         'QItemSeparator',
-        'QItemTile'
+        'QItemTile',
+        'QStepper',
+        'QStep',
+        'QStepperNavigation',
+				'QUploader'
 			],
 			directives: [
 				'Ripple'
 			],
 			// Quasar plugins
 			plugins: [
-				'Notify'
-			]
+				'Notify',
+				'LocalStorage'
+			],
 			// iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-			// i18n: 'de' // Quasar language
+			i18n: 'fr' // Quasar language
 		},
 		// animations: 'all' --- includes all animations
 		animations: ['slideInLeft', 'slideOutRight'],

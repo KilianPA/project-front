@@ -11,7 +11,7 @@
         Faites des recontres en musique
       </div>
       <div class="col-xs-12 container-button q-pa-sm q-mt-xl">
-        <q-btn color="primary" class="full-width q-pa-md q-mt-md" label="Se connecter"/>
+        <q-btn color="primary" :to="{name: 'users.login'}" class="full-width q-pa-md q-mt-md" label="Se connecter"/>
         <q-btn color="secondary" :to="{name: 'users.create'}" class="full-width q-pa-md q-mt-md" label="Créer un compte"/>
       </div>
     </div>

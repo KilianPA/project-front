@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// var CryptoJS = require('crypto-js')
 export default {
   props: ['type'],
   name: 'SpotifySearch',
@@ -58,6 +59,17 @@ export default {
   mounted () {
     console.log(window.innerWidth)
     this.width = window.innerWidth - 16
+    // this.$axios.post('https://accounts.spotify.com/api/token', {
+    //   headers: {
+    //     'Authorization': 'Basic ' + CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse('bcff5fae15a147608ddd2b42f3680dbc:03eab36a10c64b81aaa809fbd4f86023')),
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   params: {
+    //     grant_type: 'client_credentials'
+    //   }
+    // }).then(response => {
+    //   console.log(response)
+    // })
   },
   methods: {
     search () {
