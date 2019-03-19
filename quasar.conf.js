@@ -18,7 +18,13 @@ module.exports = function (ctx) {
 		],
 		supportIE: false,
 		build: {
-			env: envparser(),
+			env: ctx.dev
+				? { // so on dev we'll have
+				}
+				: { // and on build (production):
+					API: JSON.stringify('https://project-back.herokuapp.com/api/'),
+					TEST: process.env.SPOTIFY_TOKEN
+				},
 			scopeHoisting: true,
 			// vueRouterMode: 'history',
 			// vueCompiler: true,
