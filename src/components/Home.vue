@@ -26,6 +26,9 @@ export default {
     test () {
       return process.env.SPOTIFY_TOKEN
     }
+  },
+  mounted () {
+    console.log(process.env)
   }
 }
 </script>
