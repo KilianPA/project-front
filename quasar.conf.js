@@ -20,18 +20,6 @@ module.exports = function (ctx) {
 		build: {
 			env: ctx.dev
 				? { // so on dev we'll have
-					API: JSON.stringify('http://localhost:8000/api/'),
-					SPOTIFY_TOKEN: JSON.stringify('BQArnxeCFJmDt_SRyb_FuNgftDPJncCSQ1gTyqa1JWLr7NTopaPCjNWLbd4rvgg4eA-jGsOcWQHKiyYuC28'),
-					SPOTIFY_URL: JSON.stringify('https://api.spotify.com/v1/search'),
-					CLOUDINARY_KEY: JSON.stringify('476986963471838'),
-					CLOUDINARY_SECRET: JSON.stringify('LzrUmvOm98zKTDdio_XATVKo31U'),
-					CLOUDINARY_NAME: JSON.stringify('dqcv3lcqm'),
-					FIREBASE_KEY: JSON.stringify('AIzaSyDplXkRfDuXERjkQIsRT_E9KSdk1wHPLsc'),
-					FIREBASE_DOMAIN: JSON.stringify('kilian-pa-2018.firebaseapp.com'),
-					FIREBASE_DATABASE: JSON.stringify('https://kilian-pa-2018.firebaseio.com'),
-					FIREBASE_PROJECT_ID: JSON.stringify('kilian-pa-2018'),
-					FIREBASE_STORAGE_BUCKET: JSON.stringify('kilian-pa-2018.appspot.com'),
-					FIREBASE_SENDER_ID: JSON.stringify('608726727709')
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/')
