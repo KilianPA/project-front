@@ -9,7 +9,6 @@
       </div>
       <div class="col-xs-12 container-title-sub-home text-center">
         Faites des recontres en musique
-        {{ test }}
       </div>
       <div class="col-xs-12 container-button q-pa-sm q-mt-xl">
         <q-btn color="primary" :to="{name: 'users.login'}" class="full-width q-pa-md q-mt-md" label="Se connecter"/>
@@ -23,12 +22,8 @@
 export default {
   name: 'Home',
   computed: {
-    test () {
-      return process.env.SPOTIFY_TOKEN
-    }
   },
   mounted () {
-    console.log(process.env)
   }
 }
 </script>

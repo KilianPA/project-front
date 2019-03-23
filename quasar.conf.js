@@ -82,7 +82,8 @@ module.exports = function (ctx) {
         'QStepper',
         'QStep',
         'QStepperNavigation',
-				'QUploader'
+				'QUploader',
+				'QSpinnerGears'
 			],
 			directives: [
 				'Ripple'
@@ -90,7 +91,8 @@ module.exports = function (ctx) {
 			// Quasar plugins
 			plugins: [
 				'Notify',
-				'LocalStorage'
+				'LocalStorage',
+				'Loading'
 			],
 			// iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
 			i18n: 'fr' // Quasar language

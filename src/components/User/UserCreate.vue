@@ -12,7 +12,7 @@
           <!--<img class="img-create-user" :src="currentPanel < 2 ? './assets/love.png' : './assets/music.png' "/>-->
           <!--<img class="img-create-user" src="img/women.png"/>-->
           <input type="file" @change="detectPhoto" accept="image/*" capture="camera" id="cameraInput">
-          <br><img id="myImg" v-show="imgUrl" :src="imgUrl">
+          <br><img id="myImg" :src="imgUrl ? imgUrl : './assets/love.png'">
       </div>
       <div class="q-pa-sm q-mb-xl fixed-bottom" id="container-create-user">
           <q-card class="q-pa-md q-card-create-user">
@@ -128,7 +128,7 @@
 
 <script>
 const firebase = require('firebase')
-import { filter, date } from 'quasar'
+import { filter, date, QSpinnerGears } from 'quasar'
 import { required, email } from 'vuelidate/lib/validators'
 import SpotifySearch from '../Spotify/SpotifySearch'
 const mustBeTrue = (value) => value === true
@@ -232,19 +232,28 @@ export default {
     }
   },
   mounted () {
-    this.getCities()
-    var config = {
-      apiKey: process.env.FIREBASE_KEY,
-      authDomain: process.env.FIREBASE_DOMAIN,
-      databaseURL: process.env.FIREBASE_DATABASE,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_SENDER_ID
-    }
-    firebase.initializeApp(config)
+    this.$q.loading.show({
+      message: 'Initialisation de votre compte',
+      spinner: QSpinnerGears,
+      spinnerSize: 100 // in pixels
+    })
   },
   methods: {
     uploadPhoto () {
+      this.$q.loading.show({
+        message: 'Création de votre compte',
+        spinner: QSpinnerGears,
+        spinnerSize: 100 // in pixels
+      })
+      var config = {
+        apiKey: process.env.FIREBASE_KEY,
+        authDomain: process.env.FIREBASE_DOMAIN,
+        databaseURL: process.env.FIREBASE_DATABASE,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_SENDER_ID
+      }
+      firebase.initializeApp(config)
       var that = this
       if (document.querySelector('input[type="file"]').files[0]) {
         var file = document.querySelector('input[type="file"]').files[0]
@@ -291,15 +300,6 @@ export default {
     selected (item) {
       this.form.city = item.value
     },
-    getCities () {
-      var cities = require('./ressources/cities.json')
-      var that = this
-      cities.forEach(function (city) {
-        if (!that.villes.includes(city.name)) {
-          that.villes.push(city.name)
-        }
-      })
-    },
     searchSpotify (q, type, key) {
       var data = {q: q, type: type, key: key}
       if (q) {
@@ -315,6 +315,7 @@ export default {
         data: value
       }).then(response => {
         if (response.status === 200) {
+          this.$q.loading.hide()
           this.$router.push({name: 'users.created'})
         }
       })
@@ -326,6 +327,18 @@ export default {
       // const contentType = file.type // To send the correct Content-Type
       // const fileName = file.name // If you want to use this value to calculate the S3 Key.
       console.log(file)
+    }
+  },
+  updated () {
+    if (!this.cities.length) {
+      var cities = require('./ressources/cities.json')
+      var that = this
+      cities.forEach(function (city) {
+        if (!that.villes.includes(city.name)) {
+          that.villes.push(city.name)
+        }
+      })
+      this.$q.loading.hide()
     }
   },
   watch: {
@@ -418,8 +431,8 @@ export default {
         padding-top: 15px;
     }
     #myImg {
-        width: 100px;
-        height: 100px;
-        border-radius: 50px;
+        height: 150px;
+        display: block;
+        border-radius: 150px;
     }
 </style>
