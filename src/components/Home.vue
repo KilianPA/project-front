@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import SpotifySearch from './Spotify/SpotifySearch'
 export default {
   name: 'Home',
+  components: {SpotifySearch},
   computed: {
   },
   mounted () {

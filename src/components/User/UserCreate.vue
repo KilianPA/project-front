@@ -1,5 +1,6 @@
 <template>
   <div>
+      <spotify-search/>
       <div class="container-title-top-create-user">
           <div class="row title-create-user">
               {{ title }}
@@ -121,7 +122,6 @@
                     <q-btn @click="submitCreate" class="full-width" color="primary" label="Continuer"/>
                   </div>
           </q-card>
-              <spotify-search/>
       </div>
   </div>
 </template>
