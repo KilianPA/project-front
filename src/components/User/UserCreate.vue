@@ -28,11 +28,11 @@
                   </div>
                   <div v-show="currentPanel === 1" class="container-part-1" :key="2">
                       <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" :value="form.city" float-label="Ville" :error="$v.form.city.$error" >
-                          <q-autocomplete
-                                  @search="search"
-                                  :min-characters="1"
-                                  @selected="selected"
-                          />
+                          <!--<q-autocomplete-->
+                                  <!--@search="search"-->
+                                  <!--:min-characters="1"-->
+                                  <!--@selected="selected"-->
+                          <!--/>-->
                       </q-input>
 
                       <q-datetime :before="[{icon: 'cake'}]" class="input-create-user" v-model="form.birthday" hide-underline type="date" float-label="Date de naissance" :error="$v.form.birthday.$error"/>
@@ -232,11 +232,11 @@ export default {
     }
   },
   mounted () {
-    this.$q.loading.show({
-      message: 'Initialisation de votre compte',
-      spinner: QSpinnerGears,
-      spinnerSize: 100 // in pixels
-    })
+    // this.$q.loading.show({
+    //   message: 'Initialisation de votre compte',
+    //   spinner: QSpinnerGears,
+    //   spinnerSize: 100 // in pixels
+    // })
   },
   methods: {
     uploadPhoto () {
@@ -330,16 +330,16 @@ export default {
     }
   },
   updated () {
-    if (!this.cities.length) {
-      var cities = require('./ressources/cities.json')
-      var that = this
-      cities.forEach(function (city) {
-        if (!that.villes.includes(city.name)) {
-          that.villes.push(city.name)
-        }
-      })
-      this.$q.loading.hide()
-    }
+    // if (!this.cities.length) {
+    //   var cities = require('./ressources/cities.json')
+    //   var that = this
+    //   cities.forEach(function (city) {
+    //     if (!that.villes.includes(city.name)) {
+    //       that.villes.push(city.name)
+    //     }
+    //   })
+    //   this.$q.loading.hide()
+    // }
   },
   watch: {
     artistChoose () {
