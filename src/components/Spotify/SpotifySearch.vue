@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="slide-fade">
-    <div v-show="show" class="container-spotify-search" :style="{bottom: bottom + 'px', width: width + 'px'}">
+    <div v-show="show" class="container-spotify-search" :style="{top: bottom + 'px', width: width + 'px'}">
       <!--{{ dataSpotify }}-->
       <q-list v-if="spotifySearch.type === 'artist'" separator>
       <q-list-header>Artistes</q-list-header>
@@ -45,6 +45,9 @@ export default {
   computed: {
     spotifySearch () {
       return this.$store.getters['spotify/spotifySearch']
+    },
+    currentDiv () {
+      return this.$store.getters['spotify/currentDiv']
     }
   },
   data () {
@@ -76,7 +79,8 @@ export default {
       var that = this
       var q = this.spotifySearch.q
       var type = this.spotifySearch.type
-      this.bottom = (document.body.querySelector('#container-create-user').getBoundingClientRect().height) - 80
+      console.log()
+      this.bottom = (document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().bottom - 280)
       this.$axios.get(process.env.SPOTIFY_URL, {
         headers: {'Authorization': `Bearer ${process.env.SPOTIFY_TOKEN}`},
         params: {

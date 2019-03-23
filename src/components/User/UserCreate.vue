@@ -58,7 +58,7 @@
                   </div>
                   <div v-show="currentPanel === 2" class="container-part-1 row" :key="3">
                       <div class="col-xs-10">
-                          <q-input @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
+                          <q-input @focus="focusDiv('inputArtist')" id="inputArtist" @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="artistChoose">
@@ -70,7 +70,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                      <q-input autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
+                      <q-input @focus="focusDiv('inputSong1')" id="inputSong1" autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
                       </div>
                       <div class="col-xs-2">
                               <q-item class="item-img" v-if="song1Choose" multiline>
@@ -89,7 +89,7 @@
                               </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
+                          <q-input @focus="focusDiv('inputSong2')" id="inputSong2" autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song2Choose" multiline>
@@ -103,7 +103,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
+                          <q-input @focus="focusDiv('inputSong3')" id="inputSong3" autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song3Choose" multiline>
@@ -327,6 +327,10 @@ export default {
       // const contentType = file.type // To send the correct Content-Type
       // const fileName = file.name // If you want to use this value to calculate the S3 Key.
       console.log(file)
+    },
+    focusDiv (evt) {
+      // console.log(evt)
+      this.$store.dispatch('spotify/setCurrentDiv', evt)
     }
   },
   updated () {

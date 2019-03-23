@@ -17,3 +17,6 @@ export function formSong2 (state) {
 export function formSong3 (state) {
   return state.form.song3
 }
+export function currentDiv (state) {
+  return state.currentDiv
+}

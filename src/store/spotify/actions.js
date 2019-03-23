@@ -6,6 +6,10 @@ export function addSearch (context, search) {
   context.commit('ADD_SPOTIFY_SEARCH', search)
 }
 
+export function setCurrentDiv (context, div) {
+  context.commit('SET_CURRENT_DIV', div)
+}
+
 export function addForm (context, data) {
   console.log(data)
   if (data.key === 'artist') {

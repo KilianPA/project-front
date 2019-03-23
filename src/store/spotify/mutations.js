@@ -13,3 +13,7 @@ export function ADD_FORM_SONG (state, data) {
   console.log(state.form[data.key])
   state.form[data.key] = data.value
 }
+
+export function SET_CURRENT_DIV (state, data) {
+  state.currentDiv = data
+}
