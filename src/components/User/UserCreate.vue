@@ -28,7 +28,7 @@
                       <q-input class="input-create-user" color="inputColor" type="password" hide-underline :before="[{icon: 'visibility'}]" v-model="form.password" float-label="Mot de passe" :error="$v.form.password.$error"/>
                   </div>
                   <div v-show="currentPanel === 1" class="container-part-1" :key="2">
-                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" :value="form.city" float-label="Ville" :error="$v.form.city.$error" >
+                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" v-model="form.city" float-label="Ville" :error="$v.form.city.$error" >
                           <!--<q-autocomplete-->
                                   <!--@search="search"-->
                                   <!--:min-characters="1"-->
