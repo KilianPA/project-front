@@ -3,6 +3,7 @@
     <div class="container-user-home q-pa-md">
       Bonjour <strong> {{ user.surname }}, </strong>
     </div>
+    <q-btn :to="{name: 'users.edit', params: {id: user.id}}" > Editer le compte </q-btn>
     <div class="q-ma-md">
       <q-btn color="red" class="full-width" @click="logout" label="Se Deconnecter" />
     </div>

@@ -10,7 +10,7 @@
       <div class="col-xs-12 container-title-sub-home text-center">
         Faites des recontres en musique
       </div>
-      <div class="col-xs-12 container-button q-pa-sm q-mt-xl">
+      <div class="col-xs-12 col-md-3 container-button q-pa-sm q-mt-xl">
         <q-btn color="primary" :to="{name: 'users.login'}" class="full-width q-pa-md q-mt-md" label="Se connecter"/>
         <q-btn color="secondary" :to="{name: 'users.create'}" class="full-width q-pa-md q-mt-md" label="Créer un compte"/>
       </div>
@@ -52,7 +52,7 @@ export default {
     color:#2196f3;
     font-size:15px;
   }
-  container-button {
-    margin-bottom: 30px !important;
+  .container-button {
+    margin:auto;
   }
 </style>

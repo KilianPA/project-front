@@ -15,20 +15,16 @@
           <input type="file" @change="detectPhoto" accept="image/*" capture="camera" id="cameraInput">
           <br><img id="myImg" :src="imgUrl ? imgUrl : './assets/love.png'">
       </div>
-      <div class="q-pa-sm q-mb-xl fixed-bottom" id="container-create-user">
+      <div class="q-pa-sm q-mb-xl" id="container-create-user">
           <q-card class="q-pa-md q-card-create-user">
-                  <div class="row" v-if="currentPanel > 0">
-                  <q-icon @click.native="backPanel" class="q-pa-sm" size="18px" name="arrow_back_ios"/>
-                  <div class="label-back-create-user"> Retour </div>
+              <div class="col-xs-12 container-title">
+                  Vos informations
               </div>
-                  <div v-show="currentPanel === 0" class="container-part-1" :key="0">
                       <q-input class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'account_circle'}]" v-model="form.surname" float-label="Prénom" :error="$v.form.surname.$error"/>
                       <q-input class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'account_circle'}]" v-model="form.name" float-label="Nom" :error="$v.form.name.$error" />
                       <q-input class="input-create-user" color="inputColor" type="email" hide-underline :before="[{icon: 'email'}]" v-model="form.email" float-label="Email" :error="$v.form.email.$error"/>
                       <q-input class="input-create-user" color="inputColor" type="password" hide-underline :before="[{icon: 'visibility'}]" v-model="form.password" float-label="Mot de passe" :error="$v.form.password.$error"/>
-                  </div>
-                  <div v-show="currentPanel === 1" class="container-part-1" :key="2">
-                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" v-model="form.city" float-label="Ville" :error="$v.form.city.$error" >
+                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" :value="form.city" float-label="Ville" :error="$v.form.city.$error" >
                           <!--<q-autocomplete-->
                                   <!--@search="search"-->
                                   <!--:min-characters="1"-->
@@ -56,8 +52,9 @@
                               hide-underline
                               :error="$v.form.orientation.$error"
                       />
-                  </div>
-                  <div v-show="currentPanel === 2" class="container-part-1 row" :key="3">
+              <div class="col-xs-12 container-title">
+                  Musique
+              </div>
                       <div class="col-xs-10">
                           <q-input @focus="focusDiv('inputArtist')" id="inputArtist" @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
                       </div>
@@ -117,9 +114,8 @@
                               </q-item-side>
                           </q-item>
                       </div>
-                  </div>
                   <div class="q-pt-md">
-                    <q-btn @click="submitCreate" class="full-width" color="primary" label="Continuer"/>
+                    <q-btn @click="submitCreate" class="full-width" color="primary" label="Créer le compte"/>
                   </div>
           </q-card>
       </div>
@@ -278,19 +274,12 @@ export default {
       this.imgUrl = (URL.createObjectURL(evt.target.files[0]))
     },
     submitCreate () {
-      if (this.currentPanel === 2) {
-        this.$v.form.$touch()
-        if (this.$v.form.$error) {
-          this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés')
-        } else {
-          this.uploadPhoto()
-        }
+      this.$v.form.$touch()
+      if (this.$v.form.$error) {
+        this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés')
       } else {
-        this.currentPanel++
+        this.uploadPhoto()
       }
-    },
-    backPanel () {
-      this.currentPanel--
     },
     search (terms, done) {
       setTimeout(() => {
@@ -334,16 +323,6 @@ export default {
     }
   },
   updated () {
-    // if (!this.cities.length) {
-    //   var cities = require('./ressources/cities.json')
-    //   var that = this
-    //   cities.forEach(function (city) {
-    //     if (!that.villes.includes(city.name)) {
-    //       that.villes.push(city.name)
-    //     }
-    //   })
-    //   this.$q.loading.hide()
-    // }
   },
   watch: {
     artistChoose () {
@@ -438,5 +417,10 @@ export default {
         height: 150px;
         display: block;
         border-radius: 150px;
+    }
+    .container-title {
+        padding-top: 24px;
+        font-size: 14px;
+        color: #b7b7b7;
     }
 </style>
