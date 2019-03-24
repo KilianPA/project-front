@@ -2,6 +2,7 @@
   <div>
     <transition name="slide-fade">
     <div v-show="show" class="container-spotify-search" :style="{top: bottom + 'px', width: width + 'px', left: '8px'}">
+      <q-icon name="close" @click.native="show = false" class="close-spotify"/>
       <!--{{ dataSpotify }}-->
       <q-list v-if="spotifySearch.type === 'artist'" separator>
       <q-list-header>Artistes</q-list-header>
@@ -79,9 +80,9 @@ export default {
       var that = this
       var q = this.spotifySearch.q
       var type = this.spotifySearch.type
-      console.log((document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().top) + document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().height + 'px')
-      this.bottom = (document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().top) + document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().height
-      // this.bottom = (document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().bottom - 280)
+      console.log((document.body.querySelector('#' + this.currentDiv).getBoundingClientRect()).top)
+      // this.bottom = document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().top
+      // this.bottom = -Math.abs(document.body.querySelector('#' + this.currentDiv).getBoundingClientRect().bottom - 280)
       this.$axios.get(process.env.SPOTIFY_URL, {
         headers: {'Authorization': `Bearer ${process.env.SPOTIFY_TOKEN}`},
         params: {
@@ -122,7 +123,7 @@ export default {
 </script>
 <style lang="stylus">
   .container-spotify-search {
-    position: absolute;
+    position: fixed;
     width: 400px;
     height: 280px;
     background: white;
@@ -138,5 +139,11 @@ export default {
   .slide-fade-enter, .slide-fade-leave-to {
     transform: translateY(10px);
     opacity: 0;
+  }
+  .close-spotify {
+    position: absolute;
+    right: 20px;
+    top:20px;
+    cursor: pointer;
   }
 </style>

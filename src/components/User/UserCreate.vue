@@ -24,7 +24,7 @@
                       <q-input class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'account_circle'}]" v-model="form.name" float-label="Nom" :error="$v.form.name.$error" />
                       <q-input class="input-create-user" color="inputColor" type="email" hide-underline :before="[{icon: 'email'}]" v-model="form.email" float-label="Email" :error="$v.form.email.$error"/>
                       <q-input class="input-create-user" color="inputColor" type="password" hide-underline :before="[{icon: 'visibility'}]" v-model="form.password" float-label="Mot de passe" :error="$v.form.password.$error"/>
-                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" :value="form.city" float-label="Ville" :error="$v.form.city.$error" >
+                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" v-model="form.city" float-label="Ville" :error="$v.form.city.$error" >
                           <!--<q-autocomplete-->
                                   <!--@search="search"-->
                                   <!--:min-characters="1"-->
@@ -55,6 +55,7 @@
               <div class="col-xs-12 container-title">
                   Musique
               </div>
+              <div class="row">
                       <div class="col-xs-10">
                           <q-input @focus="focusDiv('inputArtist')" id="inputArtist" @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
                       </div>
@@ -114,6 +115,8 @@
                               </q-item-side>
                           </q-item>
                       </div>
+
+              </div>
                   <div class="q-pt-md">
                     <q-btn @click="submitCreate" class="full-width" color="primary" label="Créer le compte"/>
                   </div>
