@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// var CryptoJS = require('crypto-js')
 export default {
   props: ['type'],
   name: 'SpotifySearch',
