@@ -4,8 +4,8 @@
       <div class="row container-img-create-user justify-center">
         <!--<img class="img-create-user" :src="currentPanel < 2 ? './assets/love.png' : './assets/music.png' "/>-->
         <!--<img class="img-create-user" src="img/women.png"/>-->
-        <input type="file" @change="detectPhoto" accept="image/*" capture="camera" id="cameraInput">
-        <br><img id="myImg" :src="imgUrl ? imgUrl : ''">
+        <input style="display:none" type="file" @change="detectPhoto" accept="image/*" id="cameraInput">
+        <br><img @click="clickInput" id="myImg" :src="imgUrl ? imgUrl : './assets/emptyPicture.png'">
       </div>
       <div class="col-xs-12 container-title">
         Vos informations
@@ -101,6 +101,15 @@
 
 <script>
 const firebase = require('firebase')
+var config = {
+  apiKey: process.env.FIREBASE_KEY,
+  authDomain: process.env.FIREBASE_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_SENDER_ID
+}
+firebase.initializeApp(config)
 import {date, QSpinnerGears, LocalStorage} from 'quasar'
 import {required, email} from 'vuelidate/lib/validators'
 // import SpotifySearch from '../Spotify/SpotifySearch'
@@ -132,6 +141,7 @@ export default {
         }
       },
       imgUrl: '',
+      firebase: '',
       genderList: [
         {
           label: 'Homme',
@@ -182,6 +192,11 @@ export default {
   },
   mounted () {
     if (this.$router.history.current.params.id) {
+      this.$q.loading.show({
+        message: 'Récupération de vos informations',
+        spinner: QSpinnerGears,
+        spinnerSize: 100 // in pixels
+      })
       this.getDataUser()
     } else {
       this.$router.push({name: 'index'})
@@ -196,8 +211,6 @@ export default {
         url: process.env.API + 'users/' + this.$router.history.current.params.id
       }).then(response => {
         var data = (response.data)
-        that.imgUrl = data.avatar
-        that.form.avatar = data.avatar
         that.form.birthday = data.birthday
         that.form.city = data.city
         that.form.email = data.email
@@ -205,44 +218,65 @@ export default {
         that.form.surname = data.surname
         that.form.gender = data.gender
         that.form.orientation = (JSON.parse(data.orientation))
+        if (data.avatar) {
+          that.getPhotoFromFirebase(data.avatar)
+        } else {
+          that.$q.loading.hide()
+        }
       })
+    },
+    getPhotoFromFirebase (img) {
+      var that = this
+      if (img.includes('firebase')) {
+        that.imgUrl = (img)
+        that.form.avatar = img
+        that.$q.loading.hide()
+      } else {
+        var storageRef = firebase.storage().ref()
+        storageRef.child(img).getDownloadURL().then(url => {
+          that.imgUrl = (url)
+          that.form.avatar = url
+          that.$q.loading.hide()
+        })
+      }
     },
     detectPhoto (evt) {
       this.imgUrl = (URL.createObjectURL(evt.target.files[0]))
     },
     uploadPhoto () {
       this.$q.loading.show({
-        message: 'Création de votre compte',
+        message: 'Mise à jour de votre compte',
         spinner: QSpinnerGears,
         spinnerSize: 100 // in pixels
       })
-      var config = {
-        apiKey: process.env.FIREBASE_KEY,
-        authDomain: process.env.FIREBASE_DOMAIN,
-        databaseURL: process.env.FIREBASE_DATABASE,
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.FIREBASE_SENDER_ID
-      }
-      firebase.initializeApp(config)
       var that = this
-      if (document.querySelector('input[type="file"]').files[0]) {
-        var file = document.querySelector('input[type="file"]').files[0]
-        var img = document.querySelector('img')
-        let r = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + '.jpeg'
-        var storageRef = firebase.storage().ref()
-        var ref = storageRef.child(r)
-        img.src = URL.createObjectURL(file)
-        console.log(URL.createObjectURL(file))
-        ref.put(file).then(function (snapshot) {
+      if (this.form.avatar !== this.imgUrl) {
+        if (document.querySelector('input[type="file"]').files[0]) {
+          var file = document.querySelector('input[type="file"]').files[0]
+          var img = document.querySelector('img')
+          let r = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + '.jpeg'
+          var storageRef = firebase.storage().ref()
+          var ref = storageRef.child(r)
+          img.src = URL.createObjectURL(file)
+          console.log(URL.createObjectURL(file))
+          ref.put(file).then(function (snapshot) {
+            that.form.music.song1 = that.song1Choose
+            that.form.music.song2 = that.song2Choose
+            that.form.music.song3 = that.song3Choose
+            that.form.avatar = r
+            that.form.birthday = date.formatDate(that.form.birthday, 'YYYY-MM-D')
+            that.form.orientation = JSON.stringify(that.form.orientation)
+            that.updateUser(that.form)
+          })
+        } else {
           that.form.music.song1 = that.song1Choose
           that.form.music.song2 = that.song2Choose
           that.form.music.song3 = that.song3Choose
-          that.form.avatar = r
+          that.form.avatar = that.imgUrl
           that.form.birthday = date.formatDate(that.form.birthday, 'YYYY-MM-D')
           that.form.orientation = JSON.stringify(that.form.orientation)
-          // that.updateUser(that.form)
-        })
+          that.updateUser(that.form)
+        }
       }
     },
     updateUser (value) {
@@ -265,9 +299,11 @@ export default {
       if (this.$v.form.$error) {
         this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés ')
       } else {
-        // this.uploadPhoto()
-        this.updateUser(this.form)
+        this.uploadPhoto()
       }
+    },
+    clickInput () {
+      document.getElementById('cameraInput').click()
     }
   }
 }
@@ -280,5 +316,10 @@ export default {
     padding-top: 24px;
     font-size: 14px;
     color: #b7b7b7;
+  }
+  #myImg {
+    height: 120px;
+    display: block;
+    border-radius: 120px;
   }
 </style>

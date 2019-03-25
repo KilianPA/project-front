@@ -9,22 +9,22 @@
               {{ titleSub }}
           </div>
       </div>
-      <div class="row container-img-create-user justify-center">
-          <!--<img class="img-create-user" :src="currentPanel < 2 ? './assets/love.png' : './assets/music.png' "/>-->
-          <!--<img class="img-create-user" src="img/women.png"/>-->
-          <input type="file" @change="detectPhoto" accept="image/*" capture="camera" id="cameraInput">
-          <br><img id="myImg" :src="imgUrl ? imgUrl : './assets/love.png'">
-      </div>
       <div class="q-pa-sm q-mb-xl" id="container-create-user">
           <q-card class="q-pa-md q-card-create-user">
+              <div class="row container-img-create-user justify-center">
+                  <!--<img class="img-create-user" :src="currentPanel < 2 ? './assets/love.png' : './assets/music.png' "/>-->
+                  <!--<img class="img-create-user" src="img/women.png"/>-->
+                  <input style="display:none" type="file" @change="detectPhoto" accept="image/*" id="cameraInput">
+                  <br><img @click="clickInput" id="myImg" :src="imgUrl ? imgUrl : './assets/emptyPicture.png'">
+              </div>
               <div class="col-xs-12 container-title">
                   Vos informations
               </div>
-                      <q-input class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'account_circle'}]" v-model="form.surname" float-label="Prénom" :error="$v.form.surname.$error"/>
-                      <q-input class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'account_circle'}]" v-model="form.name" float-label="Nom" :error="$v.form.name.$error" />
-                      <q-input class="input-create-user" color="inputColor" type="email" hide-underline :before="[{icon: 'email'}]" v-model="form.email" float-label="Email" :error="$v.form.email.$error"/>
-                      <q-input class="input-create-user" color="inputColor" type="password" hide-underline :before="[{icon: 'visibility'}]" v-model="form.password" float-label="Mot de passe" :error="$v.form.password.$error"/>
-                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'map'}]" v-model="form.city" float-label="Ville" :error="$v.form.city.$error" >
+                      <q-input class="input-create-user" color="inputColor"  :before="[{icon: 'account_circle'}]" v-model="form.surname" float-label="Prénom" :error="$v.form.surname.$error"/>
+                      <q-input class="input-create-user" color="inputColor"  :before="[{icon: 'account_circle'}]" v-model="form.name" float-label="Nom" :error="$v.form.name.$error" />
+                      <q-input class="input-create-user" color="inputColor" type="email"  :before="[{icon: 'email'}]" v-model="form.email" float-label="Email" :error="$v.form.email.$error"/>
+                      <q-input class="input-create-user" color="inputColor" type="password"  :before="[{icon: 'visibility'}]" v-model="form.password" float-label="Mot de passe" :error="$v.form.password.$error"/>
+                      <q-input autocomplete="new-password" class="input-create-user" color="inputColor"  :before="[{icon: 'map'}]" v-model="form.city" float-label="Ville" :error="$v.form.city.$error" >
                           <!--<q-autocomplete-->
                                   <!--@search="search"-->
                                   <!--:min-characters="1"-->
@@ -32,14 +32,13 @@
                           <!--/>-->
                       </q-input>
 
-                      <q-datetime :before="[{icon: 'cake'}]" class="input-create-user" v-model="form.birthday" hide-underline type="date" float-label="Date de naissance" :error="$v.form.birthday.$error"/>
+                      <q-datetime :before="[{icon: 'cake'}]" class="input-create-user" v-model="form.birthday"  type="date" float-label="Date de naissance" :error="$v.form.birthday.$error"/>
                       <q-select
                               class="input-create-user"
                               v-model="form.gender"
                               float-label="Vous êtes ?"
                               radio
                               :options="genderList"
-                              hide-underline
                               :error="$v.form.gender.$error"
                       />
                       <q-select
@@ -49,7 +48,6 @@
                               float-label="Vous recherchez ?"
                               radio
                               :options="genderList"
-                              hide-underline
                               :error="$v.form.orientation.$error"
                       />
               <div class="col-xs-12 container-title">
@@ -57,7 +55,7 @@
               </div>
               <div class="row">
                       <div class="col-xs-10">
-                          <q-input @focus="focusDiv('inputArtist')" id="inputArtist" @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
+                          <q-input @focus="focusDiv('inputArtist')" id="inputArtist" @input="searchSpotify(form.music.artist, 'artist', 'artist')" class="input-create-user" color="inputColor"  :before="[{icon: 'album'}]" float-label="Votre artiste" v-model="form.music.artist" :error="$v.form.music.a.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="artistChoose">
@@ -69,7 +67,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                      <q-input @focus="focusDiv('inputSong1')" id="inputSong1" autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
+                      <q-input @focus="focusDiv('inputSong1')" id="inputSong1" autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
                       </div>
                       <div class="col-xs-2">
                               <q-item class="item-img" v-if="song1Choose" multiline>
@@ -88,7 +86,7 @@
                               </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input @focus="focusDiv('inputSong2')" id="inputSong2" autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
+                          <q-input @focus="focusDiv('inputSong2')" id="inputSong2" autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song2Choose" multiline>
@@ -102,7 +100,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input @focus="focusDiv('inputSong3')" id="inputSong3" autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor" hide-underline :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
+                          <q-input @focus="focusDiv('inputSong3')" id="inputSong3" autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song3Choose" multiline>
@@ -231,16 +229,11 @@ export default {
     }
   },
   mounted () {
-    // this.$q.loading.show({
-    //   message: 'Initialisation de votre compte',
-    //   spinner: QSpinnerGears,
-    //   spinnerSize: 100 // in pixels
-    // })
   },
   methods: {
     uploadPhoto () {
       this.$q.loading.show({
-        message: 'Création de votre compte',
+        message: 'Envoie de votre photo sur le serveur',
         spinner: QSpinnerGears,
         spinnerSize: 100 // in pixels
       })
@@ -301,6 +294,11 @@ export default {
       }
     },
     createUser (value) {
+      this.$q.loading.show({
+        message: 'Création de votre compte',
+        spinner: QSpinnerGears,
+        spinnerSize: 100 // in pixels
+      })
       this.$axios({
         method: 'post',
         url: process.env.API + 'users',
@@ -323,6 +321,9 @@ export default {
     focusDiv (evt) {
       // console.log(evt)
       this.$store.dispatch('spotify/setCurrentDiv', evt)
+    },
+    clickInput () {
+      document.getElementById('cameraInput').click()
     }
   },
   updated () {
@@ -364,9 +365,6 @@ export default {
     }
     .input-create-user {
         margin-top: 15px;
-        padding: 10px;
-        border: solid #f3f3f3 1px;
-        background: #fbfbfb;
     }
 
     .text-inputColor {
@@ -382,6 +380,7 @@ export default {
     }
     .title-create-user-sub {
         padding-top: 15px;
+        padding-bottom: 15px;
         color:grey;
         font-size:15px;
     }
@@ -396,7 +395,7 @@ export default {
         height: 72%;
     }
     .container-img-create-user {
-        margin-top: 15px;
+        margin-top: 5px;
     }
     .label-back-create-user {
         line-height: 3;
@@ -417,9 +416,9 @@ export default {
         padding-top: 15px;
     }
     #myImg {
-        height: 150px;
+        height: 120px;
         display: block;
-        border-radius: 150px;
+        border-radius: 120px;
     }
     .container-title {
         padding-top: 24px;
