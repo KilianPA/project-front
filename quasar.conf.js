@@ -19,7 +19,7 @@ module.exports = function (ctx) {
 		supportIE: false,
 		build: {
 			env: ctx.dev
-				? { // so on dev we'll have
+				? { // so on dev we'll hav
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/'),
