@@ -263,7 +263,7 @@ export default {
     submitCreate () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
-        this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés')
+        this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés ')
       } else {
         // this.uploadPhoto()
         this.updateUser(this.form)
