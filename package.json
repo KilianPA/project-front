@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "jest",
+    "test": "echo \\\"No test specified\\\" && exit 0",
     "build": "quasar build",
     "start": "node server.js",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
@@ -16,12 +16,6 @@
   "dependencies": {
     "@google-cloud/storage": "^2.4.3",
     "@vue/test-utils": "^1.0.0-beta.29",
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/polyfill": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-stage-2": "^7.0.0",
-    "@babel/register": "^7.4.0",
     "axios": "^0.18.0",
     "babel-jest": "^24.5.0",
     "bulma": "^0.7.4",
@@ -39,15 +33,7 @@
     "vuelidate": "^0.7.4"
   },
   "devDependencies": {
-    "@babel/helper-module-transforms": "^7.1.0",
-    "@types/jest": "^23.3.4",
     "babel-eslint": "^8.2.1",
-    "babel-core": "^7.0.0-0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.4.2",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-require-context-hook": "^1.0.0",
-    "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.18.2",
     "eslint-config-standard": "^11.0.0",
     "eslint-friendly-formatter": "^4.0.1",
@@ -77,23 +63,10 @@
       "vue"
     ],
     "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      ".*\\.(vue)$": "vue-jest"
     },
-    "transformIgnorePatterns": [
-      "node_modules/core-js",
-      "node_modules/babel-runtime",
-      "node_modules/lodash",
-      "node_modules/vue"
-    ],
     "moduleNameMapper": {
-      "^vue$": "<rootDir>/node_modules/vue/dist/vue.common.js",
-      "quasar": "quasar-framework/dist/umd/quasar.mat.umd.min.js",
-      "^~/(.*)$": "<rootDir>/$1",
-      "^@/(.*)$": "<rootDir>/src/$1",
-      "@services/(.*)$": "<rootDir>/src/services/$1",
-      "@modules/(.*)$": "<rootDir>/src/modules/$1",
-      "@libs/(.*)$": "<rootDir>/src/libs/$1"
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   }
 }
