@@ -230,7 +230,13 @@ export default {
   mounted () {
     this.$axios({
       method: 'post',
-      url: 'https://accounts.spotify.com/api/token',
+      url: `https://accounts.spotify.com/api/token`,
+      data: { // in axios data is the body request
+        grant_type: 'client_credentials'
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       auth: {
         username: process.env.SPOTIFY_USERNAME,
         password: process.env.SPOTIFY_PASSWORD
