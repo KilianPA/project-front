@@ -236,7 +236,7 @@ export default {
         password: process.env.SPOTIFY_PASSWORD
       }
     }).then(response => {
-      console.log(response)
+      console.log(response + '')
     })
   },
   methods: {
