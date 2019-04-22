@@ -4,7 +4,7 @@ module.exports = function (ctx) {
 	return {
 		// app plugins (/src/plugins)
 		plugins: [
-			'axios', 'vuelidate'
+			'axios', 'vuelidate', 'firebase'
 		],
 		css: [
 			'app.styl'
@@ -19,7 +19,7 @@ module.exports = function (ctx) {
 		supportIE: false,
 		build: {
 			env: ctx.dev
-				? { // so on dev we'll hav
+				? { // so on dev we'll have
 				}
 				: { // and on build (production):
 					API: JSON.stringify('https://project-back.herokuapp.com/api/'),
@@ -30,7 +30,9 @@ module.exports = function (ctx) {
 					FIREBASE_DATABASE: JSON.stringify(process.env.FIREBASE_DATABASE),
 					FIREBASE_PROJECT_ID: JSON.stringify(process.env.FIREBASE_PROJECT_ID),
 					FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-					FIREBASE_SENDER_ID: JSON.stringify(process.env.FIREBASE_SENDER_ID)
+					FIREBASE_SENDER_ID: JSON.stringify(process.env.FIREBASE_SENDER_ID),
+					SPOTFIY_USERNAME: JSON.stringify(process.env.SPOTFIY_USERNAME),
+					SPOTIFY_PASSWORD: JSON.stringify(process.env.SPOTIFY_PASSWORD)
 				},
 			scopeHoisting: true,
 			// vueRouterMode: 'history',
@@ -83,7 +85,12 @@ module.exports = function (ctx) {
         'QStep',
         'QStepperNavigation',
 				'QUploader',
-				'QSpinnerGears'
+				'QSpinnerGears',
+				'QChatMessage',
+				'QTabs',
+				'QTab',
+				'QTabPane',
+				'QRouteTab'
 			],
 			directives: [
 				'Ripple'

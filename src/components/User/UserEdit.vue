@@ -100,16 +100,6 @@
 </template>
 
 <script>
-const firebase = require('firebase')
-var config = {
-  apiKey: process.env.FIREBASE_KEY,
-  authDomain: process.env.FIREBASE_DOMAIN,
-  databaseURL: process.env.FIREBASE_DATABASE,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_SENDER_ID
-}
-firebase.initializeApp(config)
 import {date, QSpinnerGears, LocalStorage} from 'quasar'
 import {required, email} from 'vuelidate/lib/validators'
 // import SpotifySearch from '../Spotify/SpotifySearch'
@@ -232,7 +222,7 @@ export default {
         that.form.avatar = img
         that.$q.loading.hide()
       } else {
-        var storageRef = firebase.storage().ref()
+        var storageRef = this.$firebase.storage().ref()
         storageRef.child(img).getDownloadURL().then(url => {
           that.imgUrl = (url)
           that.form.avatar = url
@@ -255,7 +245,7 @@ export default {
           var file = document.querySelector('input[type="file"]').files[0]
           var img = document.querySelector('img')
           let r = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + '.jpeg'
-          var storageRef = firebase.storage().ref()
+          var storageRef = this.$firebase.storage().ref()
           var ref = storageRef.child(r)
           img.src = URL.createObjectURL(file)
           console.log(URL.createObjectURL(file))

@@ -46,9 +46,9 @@ export default {
           url: process.env.API + 'login',
           data: {email: this.form.email, password: this.form.password}
         }).then(response => {
+          that.loading = false
           if (response.status === 200) {
             that.$q.localStorage.set('token', response.data.access_token)
-            that.loading = false
             that.$router.push({ name: 'app.home' })
           }
         })

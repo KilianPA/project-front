@@ -124,7 +124,6 @@
 </template>
 
 <script>
-const firebase = require('firebase')
 import { filter, date, QSpinnerGears } from 'quasar'
 import { required, email } from 'vuelidate/lib/validators'
 import SpotifySearch from '../Spotify/SpotifySearch'
@@ -229,6 +228,16 @@ export default {
     }
   },
   mounted () {
+    this.$axios({
+      method: 'post',
+      url: 'https://accounts.spotify.com/api/token',
+      auth: {
+        username: process.env.SPOTIFY_USERNAME,
+        password: process.env.SPOTIFY_PASSWORD
+      }
+    }).then(response => {
+      console.log(response)
+    })
   },
   methods: {
     uploadPhoto () {
@@ -237,21 +246,13 @@ export default {
         spinner: QSpinnerGears,
         spinnerSize: 100 // in pixels
       })
-      var config = {
-        apiKey: process.env.FIREBASE_KEY,
-        authDomain: process.env.FIREBASE_DOMAIN,
-        databaseURL: process.env.FIREBASE_DATABASE,
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.FIREBASE_SENDER_ID
-      }
-      firebase.initializeApp(config)
       var that = this
       if (document.querySelector('input[type="file"]').files[0]) {
+        console.log('ici')
         var file = document.querySelector('input[type="file"]').files[0]
         var img = document.querySelector('img')
         let r = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + '.jpeg'
-        var storageRef = firebase.storage().ref()
+        var storageRef = this.$firebase.storage().ref()
         var ref = storageRef.child(r)
         img.src = URL.createObjectURL(file)
         console.log(URL.createObjectURL(file))
