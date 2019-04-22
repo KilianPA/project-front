@@ -12,7 +12,7 @@ cache:
     - node_modules
 
 install:
-  - npm install -g yarn
+  - yarn
 
 script:
   - yarn test
