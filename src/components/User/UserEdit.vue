@@ -1,5 +1,6 @@
 <template>
   <div>
+    <spotify-search/>
     <q-card class="container-input-edit q-pa-md q-ma-sm">
       <div class="row container-img-create-user justify-center">
         <!--<img class="img-create-user" :src="currentPanel < 2 ? './assets/love.png' : './assets/music.png' "/>-->
@@ -93,7 +94,7 @@
         </div>
       </div>
       <div class="q-pt-md">
-        <q-btn @click="submitCreate" class="full-width" color="primary" label="Mettre à jour"/>
+        <q-btn @click="submitUpdate" class="full-width" color="primary" label="Mettre à jour"/>
       </div>
     </q-card>
   </div>
@@ -102,10 +103,11 @@
 <script>
 import {date, QSpinnerGears, LocalStorage} from 'quasar'
 import {required, email} from 'vuelidate/lib/validators'
-// import SpotifySearch from '../Spotify/SpotifySearch'
+import SpotifySearch from '../Spotify/SpotifySearch'
 // const mustBeTrue = (value) => value === true
 export default {
   name: 'UserEdit',
+  components: {SpotifySearch},
   data () {
     return {
       form: {
@@ -188,11 +190,37 @@ export default {
         spinnerSize: 100 // in pixels
       })
       this.getDataUser()
+      this.getMusicUser()
     } else {
       this.$router.push({name: 'index'})
     }
   },
   methods: {
+    getMusicUser () {
+      var that = this
+      this.$axios({
+        headers: {'Authorization': 'Bearer ' + LocalStorage.get.item('token')},
+        method: 'get',
+        url: process.env.API + 'music/' + this.$router.history.current.params.id
+      }).then(response => {
+        response.data.forEach(d => {
+          var data = { key: d.field, value: JSON.parse(d.music_data) }
+          that.$store.dispatch('spotify/addForm', data)
+          if (d.field === 'artist') {
+            that.form.music.artist = JSON.parse(d.music_data).name
+          }
+          if (d.field === 'song1') {
+            that.form.music.song1 = JSON.parse(d.music_data).name
+          }
+          if (d.field === 'song2') {
+            that.form.music.song2 = JSON.parse(d.music_data).name
+          }
+          if (d.field === 'song3') {
+            that.form.music.song3 = JSON.parse(d.music_data).name
+          }
+        })
+      })
+    },
     getDataUser () {
       var that = this
       this.$axios({
@@ -233,6 +261,18 @@ export default {
     detectPhoto (evt) {
       this.imgUrl = (URL.createObjectURL(evt.target.files[0]))
     },
+    searchSpotify (q, type, key) {
+      var data = {q: q, type: type, key: key}
+      if (q) {
+        this.$store.dispatch('spotify/addSearch', data)
+      } else {
+        this.$store.dispatch('spotify/addSearch', {})
+      }
+    },
+    focusDiv (evt) {
+      // console.log(evt)
+      this.$store.dispatch('spotify/setCurrentDiv', evt)
+    },
     uploadPhoto () {
       this.$q.loading.show({
         message: 'Mise à jour de votre compte',
@@ -240,6 +280,7 @@ export default {
         spinnerSize: 100 // in pixels
       })
       var that = this
+      console.log(this.form.avatar === this.imgUrl)
       if (this.form.avatar !== this.imgUrl) {
         if (document.querySelector('input[type="file"]').files[0]) {
           var file = document.querySelector('input[type="file"]').files[0]
@@ -250,6 +291,7 @@ export default {
           img.src = URL.createObjectURL(file)
           console.log(URL.createObjectURL(file))
           ref.put(file).then(function (snapshot) {
+            that.form.music.artist = that.artistChoose
             that.form.music.song1 = that.song1Choose
             that.form.music.song2 = that.song2Choose
             that.form.music.song3 = that.song3Choose
@@ -258,15 +300,17 @@ export default {
             that.form.orientation = JSON.stringify(that.form.orientation)
             that.updateUser(that.form)
           })
-        } else {
-          that.form.music.song1 = that.song1Choose
-          that.form.music.song2 = that.song2Choose
-          that.form.music.song3 = that.song3Choose
-          that.form.avatar = that.imgUrl
-          that.form.birthday = date.formatDate(that.form.birthday, 'YYYY-MM-D')
-          that.form.orientation = JSON.stringify(that.form.orientation)
-          that.updateUser(that.form)
         }
+      } else {
+        console.log('ici')
+        that.form.music.artist = that.artistChoose
+        that.form.music.song1 = that.song1Choose
+        that.form.music.song2 = that.song2Choose
+        that.form.music.song3 = that.song3Choose
+        that.form.avatar = that.imgUrl
+        that.form.birthday = date.formatDate(that.form.birthday, 'YYYY-MM-D')
+        that.form.orientation = JSON.stringify(that.form.orientation)
+        that.updateUser(that.form)
       }
     },
     updateUser (value) {
@@ -284,7 +328,7 @@ export default {
         }
       })
     },
-    submitCreate () {
+    submitUpdate () {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
         this.$q.notify('Merci de vérifier que tous les champs sont bien renseignés ')
@@ -294,6 +338,31 @@ export default {
     },
     clickInput () {
       document.getElementById('cameraInput').click()
+    }
+  },
+  artistChoose () {
+    if (this.artistChoose) {
+      this.form.music.artist = this.artistChoose.name
+      this.form.music.a = true
+    }
+  },
+  song1Choose () {
+    if (this.song1Choose) {
+      console.log('coucou')
+      this.form.music.song1 = this.song1Choose.name
+      this.form.music.s1 = true
+    }
+  },
+  song2Choose () {
+    if (this.song2Choose) {
+      this.form.music.song2 = this.song2Choose.name
+      this.form.music.s2 = true
+    }
+  },
+  song3Choose () {
+    if (this.song3Choose) {
+      this.form.music.song3 = this.song3Choose.name
+      this.form.music.s3 = true
     }
   }
 }

@@ -67,7 +67,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                      <q-input @focus="focusDiv('inputSong1')" id="inputSong1" autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
+                      <q-input @focus="focusDiv('inputSong1')" id="inputSong1" autocomplete="new-password" @input="searchSpotify(form.music.song1, 'track', 'song1')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Une chanson" v-model="form.music.song1" :error="$v.form.music.s1.$error"/>
                       </div>
                       <div class="col-xs-2">
                               <q-item class="item-img" v-if="song1Choose" multiline>
@@ -86,7 +86,7 @@
                               </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input @focus="focusDiv('inputSong2')" id="inputSong2" autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
+                          <q-input @focus="focusDiv('inputSong2')" id="inputSong2" autocomplete="new-password" @input="searchSpotify(form.music.song2, 'track', 'song2')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Une chanson" v-model="form.music.song2" :error="$v.form.music.s2.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song2Choose" multiline>
@@ -100,7 +100,7 @@
                           </q-item>
                       </div>
                       <div class="col-xs-10">
-                          <q-input @focus="focusDiv('inputSong3')" id="inputSong3" autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Votre artiste" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
+                          <q-input @focus="focusDiv('inputSong3')" id="inputSong3" autocomplete="new-password" @input="searchSpotify(form.music.song3, 'track', 'song3')" class="input-create-user" color="inputColor"  :before="[{icon: 'audiotrack'}]" float-label="Une chanson" v-model="form.music.song3" :error="$v.form.music.s3.$error"/>
                       </div>
                       <div class="col-xs-2">
                           <q-item class="item-img" v-if="song3Choose" multiline>
@@ -228,22 +228,22 @@ export default {
     }
   },
   mounted () {
-    this.$axios({
-      method: 'post',
-      url: `https://accounts.spotify.com/api/token`,
-      data: { // in axios data is the body request
-        grant_type: 'client_credentials'
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      auth: {
-        username: process.env.SPOTIFY_USERNAME,
-        password: process.env.SPOTIFY_PASSWORD
-      }
-    }).then(response => {
-      console.log(response + '')
-    })
+    // this.$axios({
+    //   method: 'post',
+    //   url: `https://accounts.spotify.com/api/token`,
+    //   data: { // in axios data is the body request
+    //     grant_type: 'client_credentials'
+    //   },
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   auth: {
+    //     username: process.env.SPOTIFY_USERNAME,
+    //     password: process.env.SPOTIFY_PASSWORD
+    //   }
+    // }).then(response => {
+    //   console.log(response + '')
+    // })
   },
   methods: {
     uploadPhoto () {
@@ -263,6 +263,7 @@ export default {
         img.src = URL.createObjectURL(file)
         console.log(URL.createObjectURL(file))
         ref.put(file).then(function (snapshot) {
+          that.form.music.artist = that.artistChoose
           that.form.music.song1 = that.song1Choose
           that.form.music.song2 = that.song2Choose
           that.form.music.song3 = that.song3Choose

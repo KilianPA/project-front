@@ -11,7 +11,6 @@ export function setCurrentDiv (context, div) {
 }
 
 export function addForm (context, data) {
-  console.log(data)
   if (data.key === 'artist') {
     context.commit('ADD_FORM_ARTIST', data)
   } else {
