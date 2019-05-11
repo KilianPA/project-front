@@ -38,6 +38,11 @@ const routes = [
         name: 'app.chat',
         path: 'app/chat',
         component: () => import('components/App/Chat.vue')
+      },
+      {
+        name: 'app.match',
+        path: 'app/match',
+        component: () => import('components/App/Match.vue')
       }
     ]
   }

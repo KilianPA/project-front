@@ -1,8 +1,9 @@
 <template>
   <div>
-    <q-tabs keep-alive animated swipeable inverted color="primary" align="justify">
+    <q-tabs @select="currentTab" keep-alive animated swipeable inverted color="primary" align="justify">
       <q-tab default name="home" slot="title" icon="home" />
       <q-tab name="chat" slot="title" icon="forum" />
+      <q-tab name="match" slot="title" icon="favorite" />
       <q-tab name="setting" slot="title" icon="settings" />
       <q-tab-pane name="home">
         <div class="container-user-home q-pa-md">
@@ -27,6 +28,9 @@
           Aucune conversation
         </div>
       </q-tab-pane>
+      <q-tab-pane name="match">
+        <match :id-user="user.id" />
+      </q-tab-pane>
       <q-tab-pane name="setting">
         <q-btn class="full-width" :to="{name: 'users.edit', params: {id: user.id}}" > Editer le compte </q-btn>
       </q-tab-pane>
@@ -35,8 +39,10 @@
 </template>
 
 <script>
+import Match from './Match'
 export default {
   name: 'AppHome',
+  components: {Match},
   data () {
     return {
       user: '',
@@ -49,6 +55,11 @@ export default {
     this.getAllChats()
   },
   methods: {
+    currentTab (evt) {
+      if (evt === 'chat') {
+        this.getAllChats()
+      }
+    },
     logout () {
       this.$store.dispatch('auth/logout')
       this.$router.push({name: 'index'})
@@ -57,14 +68,16 @@ export default {
       return this.messageAvatar.filter(obj => obj.id === id)[0] ? this.messageAvatar.filter(obj => obj.id === id)[0].avatar : ''
     },
     getAllChats () {
+      console.log('ici')
       var that = this
       this.$axios({
         headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
         method: 'get',
-        url: process.env.API + 'chat/' + this.user.id
+        url: process.env.API + 'chat/' + that.user.id
       }).then(response => {
         var arr = []
         arr = response.data.isSender
+        console.log(arr)
         response.data.isReceiver.forEach(obj => {
           if (arr.filter(data => data.receiver_id !== obj.receiver_id)) {
             arr.push(obj)
@@ -74,6 +87,7 @@ export default {
       })
     },
     getInfoOfUsers (arr) {
+      this.dataChats = []
       var arrayId = []
       var that = this
       arr.forEach(data => {
@@ -89,11 +103,13 @@ export default {
         url: process.env.API + 'getusers',
         data: arrayId
       }).then(response => {
+        console.log(response.data)
         response.data.forEach(user => {
-          that.getPhotoFromFirebase(user)
-          console.log(user.avatar)
+          if (user) {
+            that.getPhotoFromFirebase(user)
+            that.dataChats.push(user)
+          }
         })
-        that.dataChats = (response.data)
       })
     },
     getPhotoFromFirebase (user) {
