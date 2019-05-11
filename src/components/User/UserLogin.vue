@@ -50,7 +50,13 @@ export default {
           if (response.status === 200) {
             that.$q.localStorage.set('token', response.data.access_token)
             that.$router.push({ name: 'app.home' })
+          } else {
+            that.loading = false
+            that.$q.notify('Mauvais email ou mot de passe')
           }
+        }).catch(() => {
+          that.loading = false
+          that.$q.notify('Mauvais email ou mot de passe')
         })
       }
     }
