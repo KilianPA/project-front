@@ -2,33 +2,33 @@
   <div>
     <div class="row">
     </div>
-    <q-card v-if="currentUser">
+    <q-card v-if="users.length">
         <q-card-media overlay-position="top">
           <img v-if="avatar" :src="avatar">
         </q-card-media>
         <q-card-title class="relative-position">
-          {{ currentUser.name }}
+          {{ users[0].name }}
           <div slot="right" class="row items-center">
-            <q-icon name="place" /> {{ currentUser.city }}
+            <q-icon name="place" /> {{ users[0].city }}
           </div>
            <br>
             <div class="text-age row q-ma-sm">
               <q-icon name="cake"/>
-              <div class="q-pl-sm"> {{ getAge(currentUser.birthday) }} ans </div>
+              <div class="q-pl-sm"> {{ getAge(users[0].birthday) }} ans </div>
             </div>
         </q-card-title>
         <q-card-main>
            <div class="music-title q-mb-md">
              <q-icon name="music_note"/> Musique
            </div>
-              <q-item>
+              <q-item v-if="artist">
                 <q-item-side :avatar="artist.images[0].url" />
                 <q-item-main
                         :label="artist.name"
                         label-lines="1"
                 />
               </q-item>
-              <q-item multiline>
+              <q-item multiline v-if="song1">
                 <q-item-side :avatar="song1.album.images[0].url" />
                 <q-item-main
                         :label="song1.artists[0].name"
@@ -37,7 +37,7 @@
                         sublabel-lines="1"
                 />
               </q-item>
-              <q-item multiline>
+              <q-item multiline v-if="song2">
                 <q-item-side :avatar="song2.album.images[0].url" />
                 <q-item-main
                         :label="song2.artists[0].name"
@@ -46,7 +46,7 @@
                         sublabel-lines="1"
                 />
               </q-item>
-              <q-item multiline>
+              <q-item multiline v-if="song3">
                 <q-item-side :avatar="song3.album.images[0].url" />
                 <q-item-main
                         :label="song3.artists[0].name"
@@ -80,21 +80,16 @@ export default {
     }
   },
   computed: {
-    currentUser () {
-      console.log(this.users[0])
-      return this.users[0]
-    }
   },
   mounted () {
-    console.log(this.idUser)
     var that = this
     this.$axios({
       headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
       method: 'get',
-      url: process.env.API + 'users'
+      url: process.env.API + 'usersMatch/' + this.idUser
     }).then(response => {
-      that.getMusic()
       that.users = (response.data)
+      that.getMusic()
     })
   },
   methods: {
@@ -122,14 +117,15 @@ export default {
       }
     },
     removeFirstUser () {
-      this.users = this.users.filter(user => user !== this.currentUser)
+      this.users = this.users.filter(user => user !== this.users[0])
+      this.getMusic()
     },
     getMusic () {
       var that = this
       this.$axios({
         headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
         method: 'get',
-        url: process.env.API + 'music/' + 1
+        url: process.env.API + 'music/' + this.users[0].id
       }).then(response => {
         response.data.forEach(data => {
           if (data.field === 'artist') {
@@ -155,7 +151,7 @@ export default {
         url: process.env.API + 'match',
         data: {
           sender_id: that.idUser,
-          receiver_id: that.currentUser.id
+          receiver_id: that.users[0].id
         }
       }).then(response => {
         that.removeFirstUser()
@@ -165,6 +161,7 @@ export default {
   watch: {
     users () {
       if (this.users) {
+        console.log(this.users[0])
         this.getPhotoFromFirebase(this.users[0].avatar)
       }
     }
