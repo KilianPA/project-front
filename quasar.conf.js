@@ -103,7 +103,9 @@ module.exports = function (ctx) {
 				'QRating',
 				'QCardMedia',
 				'QCardSeparator',
-				'QCardActions'
+				'QCardActions',
+				'QInnerLoading',
+				'QSpinnerHearts'
 			],
 			directives: [
 				'Ripple'
