@@ -7,7 +7,7 @@
       </q-inner-loading>
       <transition name="slide-fade">
         <q-card v-if="users.length && show">
-            <q-card-media overlay-position="top" :style="{minHeight: '423px'}">
+            <q-card-media overlay-position="top" :style="{minHeight: '336px'}">
               <img v-if="avatar" :src="avatar">
             </q-card-media>
             <q-card-title class="relative-position">
