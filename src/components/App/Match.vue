@@ -7,7 +7,7 @@
       </q-inner-loading>
       <transition name="slide-fade">
         <q-card v-if="users.length && show">
-            <q-card-media overlay-position="top">
+            <q-card-media overlay-position="top" :style="{minHeight: '423px'}">
               <img v-if="avatar" :src="avatar">
             </q-card-media>
             <q-card-title class="relative-position">
@@ -62,8 +62,8 @@
             </q-card-main>
             <q-card-separator />
             <q-card-actions class="justify-center">
-              <q-btn @click="removeFirstUser" size="30px" color="red" class="margin-right"  round dense icon="close" />
-              <q-btn @click="matchWithUser" size="30px" color="primary" round dense icon="favorite" />
+              <q-btn @click="matchWithUser(false)" size="30px" color="red" class="margin-right"  round dense icon="close" />
+              <q-btn @click="matchWithUser(true)" size="30px" color="primary" round dense icon="favorite" />
             </q-card-actions>
           </q-card>
       </transition>
@@ -161,7 +161,7 @@ export default {
         })
       }
     },
-    matchWithUser () {
+    matchWithUser (status) {
       var that = this
       this.$axios({
         headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
@@ -169,7 +169,8 @@ export default {
         url: process.env.API + 'match',
         data: {
           sender_id: that.idUser,
-          receiver_id: that.users[0].id
+          receiver_id: that.users[0].id,
+          is_matched: status
         }
       }).then(response => {
         that.removeFirstUser()

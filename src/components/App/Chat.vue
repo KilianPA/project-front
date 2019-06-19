@@ -1,7 +1,14 @@
 <template>
   <div>
-    <div class="full-width shadow-1 q-pa-sm q-mb-sm container-back">
-      <q-icon @click.native="back" size="28px" name="keyboard_arrow_left"/>
+    <div class="full-width shadow-1 q-pa-sm q-mb-sm container-back row">
+      <div class="col-xs-1">
+        <q-icon @click.native="back" class="cursor-pointer" size="28px" name="keyboard_arrow_left"/>
+      </div>
+      <div v-if="receiverData.surname" class="col-xs-11" :style="{paddingTop: '5px'}">
+        <strong>
+          {{ receiverData.surname + ' ' + receiverData.name}}
+        </strong>
+      </div>
     </div>
     <div class="container-messages q-ma-md">
       <transition-group name="slide-fade">
@@ -23,7 +30,6 @@
         <q-icon @click.native="submitMessage" class="icon-send" size="25px" color="primary" name="send"/>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -138,5 +144,8 @@ export default {
   }
   .container-back {
     background: white;
+  }
+  .cursor-pointer {
+    cursor:pointer;
   }
 </style>
