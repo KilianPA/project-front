@@ -2,7 +2,7 @@
   <div>
     <q-tabs @select="currentTab" keep-alive animated inverted color="primary" align="justify">
       <q-tab default name="chat" slot="title" icon="forum" />
-      <q-tab name="match" slot="title" icon="favorite" />
+      <q-tab name="match" slot="title" color="red" icon="favorite" />
       <q-tab name="setting" slot="title" icon="settings" />
 <!--      <q-tab-pane name="home">-->
 <!--        <div class="container-user-home q-pa-md">-->
@@ -14,7 +14,7 @@
 <!--      </q-tab-pane>-->
       <q-tab-pane name="chat">
         <!--{{dataChats}}-->
-        <q-list v-if="dataChats.length" highlight>
+        <q-list v-if="dataChats.length" highlight separator :style="{background: 'white'}">
           <q-list-header>Vos conversations</q-list-header>
           <q-item :to="{name: 'app.chat', params: {receiverId: chat.id}}" v-for="(chat, index) in dataChats" :key="index">
             <q-item-side :avatar="getAvatar(chat.id)" />
@@ -23,6 +23,9 @@
                     label-lines="1"
                     sublabel-lines="2"
             />
+            <q-item-side right>
+              <q-item-tile icon="chat_bubble" color="primary" />
+            </q-item-side>
           </q-item>
         </q-list>
         <div v-if="!dataChats.length">
@@ -73,7 +76,6 @@ export default {
       return this.messageAvatar.filter(obj => obj.id === id)[0] ? this.messageAvatar.filter(obj => obj.id === id)[0].avatar : ''
     },
     getAllChats () {
-      console.log('ici')
       var that = this
       this.$axios({
         headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
@@ -82,7 +84,6 @@ export default {
       }).then(response => {
         var arr = []
         arr = response.data.isSender
-        console.log(arr)
         response.data.isReceiver.forEach(obj => {
           if (arr.filter(data => data.receiver_id !== obj.receiver_id)) {
             arr.push(obj)
@@ -108,7 +109,6 @@ export default {
         url: process.env.API + 'getusers',
         data: arrayId
       }).then(response => {
-        console.log(response.data)
         response.data.forEach(user => {
           if (user) {
             that.getPhotoFromFirebase(user)

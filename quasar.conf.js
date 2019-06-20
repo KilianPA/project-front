@@ -105,7 +105,8 @@ module.exports = function (ctx) {
 				'QCardSeparator',
 				'QCardActions',
 				'QInnerLoading',
-				'QSpinnerHearts'
+				'QSpinnerHearts',
+        'QSpinnerPuff'
 			],
 			directives: [
 				'Ripple'

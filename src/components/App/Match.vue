@@ -8,7 +8,10 @@
       <transition name="slide-fade">
         <q-card v-if="users.length && show">
             <q-card-media overlay-position="top" :style="{minHeight: '336px'}">
-              <img v-if="avatar" :src="avatar">
+              <img @load="loadedImg" v-if="avatar" :src="avatar">
+              <q-inner-loading :visible="visible">
+                <q-spinner-puff size="80px" color="primary"></q-spinner-puff>
+              </q-inner-loading>
             </q-card-media>
           <q-card-actions class="justify-center q-mt-sm">
             <q-btn @click="matchWithUser(false)" size="30px" color="red" class="margin-right"  round dense icon="close" />
@@ -80,6 +83,7 @@ export default {
   props: ['idUser'],
   data () {
     return {
+      visible: true,
       show: true,
       users: [],
       avatar: '',
@@ -103,6 +107,9 @@ export default {
     })
   },
   methods: {
+    loadedImg () {
+      this.visible = false
+    },
     getAge (birthday) {
       var today = new Date()
       var birthDate = new Date(birthday)
@@ -162,6 +169,7 @@ export default {
       }
     },
     matchWithUser (status) {
+      this.visible = true
       var that = this
       this.$axios({
         headers: {'Authorization': 'Bearer ' + this.$q.localStorage.get.item('token')},
@@ -180,7 +188,6 @@ export default {
   watch: {
     users () {
       if (this.users.length) {
-        console.log(this.users[0])
         this.getPhotoFromFirebase(this.users[0].avatar)
       }
     }
