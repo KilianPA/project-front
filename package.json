@@ -8,10 +8,30 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \\\"No test specified\\\" && exit 0",
+    "build": "quasar build",
+    "start": "node server.js",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "@google-cloud/storage": "^2.4.3",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "axios": "^0.18.0",
+    "babel-jest": "^24.5.0",
+    "bulma": "^0.7.4",
+    "cloudinary": "^1.13.2",
+    "connect-history-api-fallback": "^1.6.0",
+    "crypto-js": "^3.1.9-1",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "firebase": "6.2.0",
+    "firebase-admin": "^7.1.0",
+    "jest": "^24.5.0",
+    "kraken": "^0.4.0",
+    "node-pre-gyp": "^0.13.0",
+    "serve-static": "^1.13.2",
+    "vue-jest": "^3.0.4",
+    "vuelidate": "^0.7.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
@@ -36,5 +56,18 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
+  }
 }

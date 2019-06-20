@@ -5,12 +5,9 @@ const routes = [
     component: () => import('layouts/MyLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Index.vue')
-      },
-      {
-        name: 'users',
-        path: 'users',
-        component: () => import('components/User.vue')
+        name: 'index',
+        path: '',
+        component: () => import('components/Home.vue')
       },
       {
         name: 'users.edit',
@@ -21,6 +18,31 @@ const routes = [
         name: 'users.create',
         path: 'users/create',
         component: () => import('components/User/UserCreate.vue')
+      },
+      {
+        name: 'users.created',
+        path: 'users/created',
+        component: () => import('components/User/UserCreated.vue')
+      },
+      {
+        name: 'users.login',
+        path: 'users/login',
+        component: () => import('components/User/UserLogin.vue')
+      },
+      {
+        name: 'app.home',
+        path: 'app/home',
+        component: () => import('components/App/Home.vue')
+      },
+      {
+        name: 'app.chat',
+        path: 'app/chat',
+        component: () => import('components/App/Chat.vue')
+      },
+      {
+        name: 'app.match',
+        path: 'app/match',
+        component: () => import('components/App/Match.vue')
       }
     ]
   }

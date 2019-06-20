@@ -1,28 +1,29 @@
 {
+  "env": {
+    "test": {
+      "presets": [    [
+        "@babel/preset-env", { "targets": { "node": "current" }}
+      ]
+      ]
+    }
+  },
   "presets": [
     [
       "@babel/preset-env", {
-        "modules": false,
-        "loose": false,
-        "useBuiltIns": "usage"
-      }
-    ],
-    [
-      "@babel/preset-stage-2", {
-        "modules": false,
-        "loose": false,
-        "useBuiltIns": true,
-        "decoratorsLegacy": true
-      }
+      "modules": false,
+      "loose": false,
+      "useBuiltIns": "usage"
+    }
     ]
   ],
   "plugins": [
     [
       "@babel/transform-runtime", {
-        "polyfill": false,
-        "regenerator": false
-      }
-    ]
+      "regenerator": false
+    }
+    ],
+    ["@babel/plugin-syntax-dynamic-import"]
   ],
+  "compact": false,
   "comments": false
 }
