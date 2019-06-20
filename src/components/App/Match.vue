@@ -10,6 +10,11 @@
             <q-card-media overlay-position="top" :style="{minHeight: '336px'}">
               <img v-if="avatar" :src="avatar">
             </q-card-media>
+          <q-card-actions class="justify-center q-mt-sm">
+            <q-btn @click="matchWithUser(false)" size="30px" color="red" class="margin-right"  round dense icon="close" />
+            <q-btn @click="matchWithUser(true)" size="30px" color="primary" round dense icon="favorite" />
+          </q-card-actions>
+<!--          <q-card-separator />-->
             <q-card-title class="relative-position">
               {{ users[0].name }}
               <div slot="right" class="row items-center">
@@ -60,11 +65,6 @@
                     />
                   </q-item>
             </q-card-main>
-            <q-card-separator />
-            <q-card-actions class="justify-center">
-              <q-btn @click="matchWithUser(false)" size="30px" color="red" class="margin-right"  round dense icon="close" />
-              <q-btn @click="matchWithUser(true)" size="30px" color="primary" round dense icon="favorite" />
-            </q-card-actions>
           </q-card>
       </transition>
       <div v-if="!users.length" class="text-center">

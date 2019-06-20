@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-tabs @select="currentTab" keep-alive animated swipeable inverted color="primary" align="justify">
+    <q-tabs @select="currentTab" keep-alive animated inverted color="primary" align="justify">
       <q-tab default name="chat" slot="title" icon="forum" />
       <q-tab name="match" slot="title" icon="favorite" />
       <q-tab name="setting" slot="title" icon="settings" />
